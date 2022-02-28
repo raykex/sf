@@ -1,0 +1,12 @@
+---
+# tasks file for dnsmasq
+- name: install package
+  apt:
+    name: dnsmasq
+    state: latest
+ 
+- name: start service
+  service:
+    name: dnsmasq
+    state: started
+    enabled: yes

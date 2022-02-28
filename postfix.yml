@@ -1,0 +1,14 @@
+---
+- hosts: test
+  gather_facts: yes
+  tasks:
+  - name: install postfix
+    apt:
+      name: postfix
+      state: latest
+    tags: init postfix
+  - name: remove postfix
+    apt:
+      name: postfix
+      state: absent
+    tags: drop postfix

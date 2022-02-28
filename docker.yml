@@ -1,0 +1,12 @@
+---
+- hosts: test
+  gather_facts: yes
+  tasks:
+  - name: install  docker
+    apt:
+      name: docker
+      state: latest
+  - name: start docker
+    service:
+      name: docker
+      state: started

@@ -1,0 +1,31 @@
+---
+- hosts: test
+  become: yes
+  gather_facts: no
+
+  tasks:
+  - name: Make sure we have a 'superusers' group
+    group:
+      name: superusers
+      state: present
+
+  - name: Allow 'superusers' group to have passwordless sudo
+    lineinfile:
+      dest: /etc/sudoers
+      state: present
+      regexp: '^%superusers'
+      line: '%superusers ALL=(ALL) NOPASSWD: ALL'
+      validate: visudo -cf %s
+
+  - name: Add sudoers users to superusers group
+    user:
+      name: user1
+      groups: superusers 
+      shell: /bin/bash 
+      password: $6$saltsalt$5hee1gDhwcn0FIqAK8Np5UV4NtUjpcYp3mChiCjiR7y7R5KZKcbWCKXb0fVi1IEDniB9rZz24Cx8n7tqfHIT70
+      append: yes
+      name: user2
+      groups: superusers
+      shell: /bin/bash 
+      password: $6$saltsalt$5hee1gDhwcn0FIqAK8Np5UV4NtUjpcYp3mChiCjiR7y7R5KZKcbWCKXb0fVi1IEDniB9rZz24Cx8n7tqfHIT70
+      append: yes
