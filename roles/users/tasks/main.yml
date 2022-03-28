@@ -1,0 +1,20 @@
+---
+- name: Add user to remote hosts
+  user: 
+    name: user1 
+    groups: users 
+    shell: /bin/bash 
+    password: $6$saltsalt$5hee1gDhwcn0FIqAK8Np5UV4NtUjpcYp3mChiCjiR7y7R5KZKcbWCKXb0fVi1IEDniB9rZz24Cx8n7tqfHIT70
+    append: yes
+
+- name: Create 2048-bit key SSH
+  user:
+    name: user1
+    generate_ssh_key: yes
+    ssh_key_bits: 2048
+    ssh_key_file: .ssh/id_rsa 
+
+- name: Add SSH keys to remote hosts
+  authorized_key: 
+    user: user1 
+    key: "{{ lookup('file','/home/user1/.ssh/id_rsa.pub') }}"

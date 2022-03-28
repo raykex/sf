@@ -1,0 +1,19 @@
+---
+- name: install php-fpm
+  apt: 
+    name: php-fpm
+    state: latest
+
+- name: set-up port 9000 for php-fpm
+  lineinfile: dest=/etc/php/7.4/fpm/pool.d/www.conf
+    regexp='^listen'
+    insertafter='^listen'
+    line='listen = 127.0.0.1:9000'
+    state=present
+
+- name: start php-fpm
+  service: 
+    name: php7.4-fpm
+    state: started
+    enabled: yes
+# tasks file for php
